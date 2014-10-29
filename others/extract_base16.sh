@@ -15,9 +15,10 @@ echo "You maybe want execute \"rm -Rf ../colors/base16-*\" before"
 for f in $(ls $DIR/*.sh); do
 	file_name=$(basename "$f" .sh)
 	mkdir colors/$file_name 2> /dev/null
-	# search values
-	#FIXME extras seds
-	# '\'' match with a single quote
+	# Searching for values
+	# Note: '\'' match with a single quote
+	#FIXME to many sed's
+	#
 	# for dconf '',
 	dconf_palette=$(sed -rn 's/[ ]*dset palette \"\[{0,1}(.*)\]{0,1}\"/\1/p' $f | sed 's/\]//')	&& [[ -z "$dconf_palette" ]]	&& echo "$file_name: dconf palette not found"
 	dconf_bg_color=$(sed -rn 's/[ ]*dset background-color \"(.*)\"/\1/p' $f | sed 's/'\''//g')	&& [[ -z "$dconf_bg_color" ]]	&& echo "$file_name: dconf background-color not found"
