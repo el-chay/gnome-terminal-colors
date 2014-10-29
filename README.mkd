@@ -1,24 +1,8 @@
-Solarized Colorscheme for Gnome Terminal
+Color schemes for Gnome Terminal
 ========================================
 
-Scripts for setting the Solarized color set with Gnome Terminal. To get nicely
-colored directory listings, you will also need to set up a [dircolors solarised
-color theme].
-
-Colors
-------
-
-Only the foreground, background and highlight colors are different in the light
-and dark color sets, as one of the main ideas behind Ethan Schonoovers work is
-to use the same colors in the palette for both.
-
-See the [Solarized homepage] for theory behind the colors, screenshots, details
-and colorscheme versions for Vim, Mutt, popular terminal emulators and other
-applications.
-
-For the original works of Ethan Schoonover, visit the [Solarized repository].
-The scripts for Gnome Terminal is maintained in [Gnome Terminal Colors
-Solarized repository].
+Scripts for setting solarized, base-16 and zenburn color schemes in gnome
+terminal
 
 Installation and usage
 ----------------------
@@ -36,9 +20,6 @@ Then you can run the installation script:
     $ ./install.sh
 
 And just follow the instructions.
-
-You can also run the `set_dark.sh` or `set_light.sh` script, to directly set
-the dark or light solarized theme to the actived gnome-terminal profile.
 
 Uninstall
 ---------
@@ -78,11 +59,7 @@ just list at launch the children folders in the `colors` dir.
 Contributors
 ------------
 
-* Sigurd Gartmann <sigurdga@sigurdga.no>
-* Anthony Ruhier <anthony.ruhier@gmail.com>
-* Paul Thomson <captbunzo@gmail.com>
-* Techlive Zheng <techlivezheng@gmail.com>
-* Daniel Graña <dangra@gmail.com>
+See [Anthony repo]
 
 FAQ
 ===
@@ -109,6 +86,7 @@ to him !). If it is maintained (like pulling the new commits from this repo
 and following the Mate Terminal changes), I will quote the forked repo in this
 readme.
 
+[Anthony repo]: https://github.com/Anthony25/gnome-terminal-colors-solarized
 [Solarized homepage]:   http://ethanschoonover.com/solarized
 [Solarized repository]: https://github.com/altercation/solarized
 [Gnome Terminal Colors Solarized repository]: https://github.com/sigurdga/gnome-terminal-colors-solarized
