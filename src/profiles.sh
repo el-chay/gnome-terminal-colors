@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-gnomeVersion="$(expr "$(gnome-terminal --version)" : '.* \(.*[.].*[.].*\)$')"
 dircolors_checked=false
 
 
@@ -26,7 +25,7 @@ get_uuid() {
   local profile_name=$1
   for i in ${!profiles[*]}
     do
-      if [[ "$(dconf read $dconfdir/${profiles[i]}/visible-name)" == \
+      if [[ "$(dconf read $dconfdir/:${profiles[i]}/visible-name)" == \
           "'$profile_name'" ]]
         then echo "${profiles[i]}"
         return 0
