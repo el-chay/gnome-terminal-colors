@@ -1,11 +1,11 @@
-Color schemes for Gnome Terminal
-========================================
+# Color schemes for Gnome Terminal
 
-Scripts for setting solarized, base-16 and zenburn color schemes in gnome
-terminal
+Scripts for setting [base-16](https://github.com/chriskempson/base16-gnome-terminal), [solarized](https://github.com/Anthony25/gnome-terminal-colors-solarized) and [zenburn](http://kippura.org/zenburnpage/) color schemes in gnome-terminal.
 
-Installation and usage
-----------------------
+## Warning
+Please, note that github repository is only a mirror, the main efforts in this code are submitted to [gitlab](https://gitlab.com/gnumoksha/gnome-terminal-colors).
+
+## Installation and usage
 
 To be able to uninstall, we highly recommend that you create a new Gnome
 Terminal profile, using the menus in Gnome Terminal.
@@ -28,8 +28,7 @@ To run this script remotely or via cron (or from any shell where
 
     $ dbus-launch ./install.sh
 
-Uninstall
----------
+## Uninstall
 
 Change to another profile in Gnome Terminal, then remove the Solarized profile
 by running:
@@ -48,8 +47,7 @@ Be sure to have the dconf-cli package installed and do:
 Replace PROFILE_ID by your profile ID (you can get it in your profile
 configuration in gnome-terminal).
 
-Themes
-------
+## Themes
 
 Each theme has is own folder in the `colors` dir. It contains the following
 files:
@@ -62,8 +60,7 @@ files:
 No additional configuration is needed to add a theme, the installation script
 just list at launch the children folders in the `colors` dir.
 
-Dircolors
----------
+## Dircolors
 
 The installation script will ask if a solarized dircolors is wanted. It will be
 downloaded and installed as `~/.dir_colors/dircolors`. On CentOS, it can be an
@@ -82,17 +79,11 @@ fi
 This should not be necessary on major distributions (such as Ubuntu, Fedora,
 etc.) but could be on ArchLinux, Gentoo and others.
 
-Contributors
-------------
+## Similiar projects
+* https://github.com/Mayccoll/Gogh
+* https://github.com/base16-builder/base16-builder
 
-* Sigurd Gartmann <sigurdga@sigurdga.no>
-* Anthony Ruhier <anthony.ruhier@gmail.com>
-* Paul Thomson <captbunzo@gmail.com>
-* Techlive Zheng <techlivezheng@gmail.com>
-* Daniel Graña <dangra@gmail.com>
-
-FAQ
-===
+## FAQ
 
 Conflicting background colors in VIM
 ------------------------------------
