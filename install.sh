@@ -53,7 +53,7 @@ set_profile_colors() {
     then local profile_path=$dconfdir/$profile
 
     # set color palette
-    dconf write $profile_path/palette "[$(cat $scheme_dir/palette_dconf)]"
+    dconf write $profile_path/palette "$(to_dconf < $scheme_dir/palette)"
 
     # set foreground, background and highlight color
     dconf write $profile_path/bold-color "'$(cat $bd_color_file)'"
