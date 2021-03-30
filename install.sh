@@ -15,6 +15,7 @@ show_help() {
   echo "    install.sh [-h|--help] \\"
   echo "               (-s <scheme>|--scheme <scheme>|--scheme=<scheme>) \\"
   echo "               (-p <profile>|--profile <profile>|--profile=<profile>)"
+  echo "               [OPTION]..."
   echo
   echo "Options"
   echo
@@ -24,8 +25,11 @@ show_help() {
   echo "        Color scheme to be used"
   echo "    -p, --profile"
   echo "        Gnome Terminal profile to overwrite"
+  echo "    --install-dircolors, --skip-dircolors"
+  echo "        Do or skip the dircolors installation in a non interactive mode"
   echo
 }
+
 
 validate_scheme() {
   local profile=$1
@@ -33,7 +37,11 @@ validate_scheme() {
 }
 
 set_profile_colors() {
-  local profile=$1
+  if [ "$newGnome" = "1" ]
+    then local profile=:$1
+  else
+    local profile=$1
+  fi
   local scheme=$2
   local scheme_dir=$dir/colors/$scheme
 
@@ -45,7 +53,7 @@ set_profile_colors() {
     then local profile_path=$dconfdir/$profile
 
     # set color palette
-    dconf write $profile_path/palette "[$(cat $scheme_dir/palette_dconf)]"
+    dconf write $profile_path/palette "$(to_dconf < $scheme_dir/palette)"
 
     # set foreground, background and highlight color
     dconf write $profile_path/bold-color "'$(cat $bd_color_file)'"
@@ -62,8 +70,7 @@ set_profile_colors() {
     local profile_path=$gconfdir/$profile
 
     # set color palette
-    gconftool-2 -s -t string $profile_path/palette $(cat \
-        $scheme_dir/palette_gconf)
+    gconftool-2 -s -t string $profile_path/palette "$(to_gconf < $scheme_dir/palette)"
 
     # set foreground, background and highlight color
     gconftool-2 -s -t string $profile_path/bold_color $(cat $bd_color_file)
@@ -124,7 +131,7 @@ interactive_confirm() {
   echo -n "(YES to continue) "
 
   read confirmation
-  if [[ $(echo $confirmation | tr '[:lower:]' '[:upper:]') != YES ]]
+  if [[ ${confirmation^^} != YES ]]
   then
     die "ERROR: Confirmation failed -- ABORTING!"
   fi
@@ -153,6 +160,12 @@ do
       profile=$2
       shift
     ;;
+    --install-dircolors )
+      install_dircolors=true
+    ;;
+    --skip-dircolors )
+      install_dircolors=false
+    ;;
   esac
   shift
 done
@@ -160,7 +173,20 @@ done
 if [[ -z $scheme ]] || [[ -z $profile ]]
 then
   interactive_help
+fi
+
+if [[ -n $scheme ]]
+  then validate_scheme $scheme
+else
   interactive_select_scheme "${schemes[@]}"
+fi
+
+if [[ -n $profile ]]
+  then if [ "$newGnome" = "1" ]
+    then profile="$(get_uuid "$profile")"
+  fi
+  validate_profile $profile
+else
   if [ "$newGnome" = "1" ]
     then check_empty_profile
   fi
@@ -168,13 +194,12 @@ then
   interactive_confirm
 fi
 
-if [[ -n $scheme ]] && [[ -n $profile ]]
-then
-  validate_scheme $scheme
-  if [ "$newGnome" = "1" ]
-    then profile="$(get_uuid "$profile")"
-  fi
-  validate_profile $profile
-  set_profile_colors $profile $scheme
-  check_dircolors || warning_message_dircolors
+set_profile_colors $profile $scheme
+
+if [[ -n $install_dircolors ]]
+    then if "$install_dircolors"
+        then copy_dircolors
+    fi
+else
+    check_dircolors || warning_message_dircolors
 fi
